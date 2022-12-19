@@ -46,6 +46,7 @@ export class UsersController {
   public async login(@Body() request: AuthUserDto, @Session() session: any): Promise<User> {
     const user = await this.authService.login(request.email, request.password);
     session.userId = user.id;
+    console.log('session', session)
     return user;
   }
 
