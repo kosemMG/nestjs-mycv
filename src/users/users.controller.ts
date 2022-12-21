@@ -7,7 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Query, Session, UseGuards, UseInterceptors, UsePipes
+  Query, Session, UseGuards, UsePipes
 } from '@nestjs/common';
 import { AuthUserDto } from './dto/auth-user.dto';
 import { UsersService } from './users.service';
@@ -16,13 +16,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { Serialise } from '../interceptors/serialise.interceptor';
 import { AuthService } from './auth/auth.service';
-import { CurrentUserInterceptor } from './interceptors/current-user.interceptor';
 import { AuthGuard } from '../guards/auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
 
 @Controller('auth')
 @Serialise(UserDto)
-@UseInterceptors(CurrentUserInterceptor)
 export class UsersController {
   constructor(private readonly usersService: UsersService,
               private readonly authService: AuthService) {
@@ -46,7 +44,6 @@ export class UsersController {
   public async login(@Body() request: AuthUserDto, @Session() session: any): Promise<User> {
     const user = await this.authService.login(request.email, request.password);
     session.userId = user.id;
-    console.log('session', session)
     return user;
   }
 

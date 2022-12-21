@@ -46,8 +46,7 @@ const cookieSession = require('cookie-session');
   ]
 })
 export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cookieSession({ keys: ['asdfasdfd'] }))
-      .forRoutes('*');
+  public configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(cookieSession({ keys: ['asdfasdfd'] })).forRoutes('*');
   }
 }
